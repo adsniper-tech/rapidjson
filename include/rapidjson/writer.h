@@ -221,11 +221,18 @@ public:
     }
 
     bool Key(const Ch* str, SizeType length, bool copy = false) { return String(str, length, copy); }
+    Writer& Key2(const Ch* str, SizeType length, bool copy = false) { String(str, length, copy); return *this; }
 
 #if RAPIDJSON_HAS_STDSTRING
     bool Key(const std::basic_string<Ch>& str)
     {
       return Key(str.data(), SizeType(str.size()));
+    }
+    
+    Writer& Key2(const std::basic_string<Ch>& str)
+    {
+      Key(str.data(), SizeType(str.size()));
+      return *this;
     }
 #endif
 	
@@ -259,6 +266,7 @@ public:
     //! Simpler but slower overload.
     bool String(const Ch* const& str) { return String(str, internal::StrLen(str)); }
     bool Key(const Ch* const& str) { return Key(str, internal::StrLen(str)); }
+    Writer& Key2(const Ch* const& str) { Key(str, internal::StrLen(str)); return *this; }
     
     //@}
 
