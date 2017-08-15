@@ -36,6 +36,12 @@
 #include <arm_neon.h>
 #endif
 
+#include <experimental/string_view>
+
+#ifndef RAPIDJSON_HAS_STDSTRING
+#define RAPIDJSON_HAS_STDSTRING
+#endif
+
 #ifdef _MSC_VER
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(4127) // conditional expression is constant
@@ -208,11 +214,9 @@ public:
         return EndValue(WriteString(str, length));
     }
 
-#if RAPIDJSON_HAS_STDSTRING
-    bool String(const std::basic_string<Ch>& str) {
-        return String(str.data(), SizeType(str.size()));
+    bool String(std::experimental::string_view strv) {
+        return String(strv.data(), SizeType(strv.size()));
     }
-#endif
 
     bool StartObject() {
         Prefix(kObjectType);
@@ -223,18 +227,16 @@ public:
     bool Key(const Ch* str, SizeType length, bool copy = false) { return String(str, length, copy); }
     Writer& Key2(const Ch* str, SizeType length, bool copy = false) { String(str, length, copy); return *this; }
 
-#if RAPIDJSON_HAS_STDSTRING
-    bool Key(const std::basic_string<Ch>& str)
+    bool Key(std::experimental::string_view strv)
     {
-      return Key(str.data(), SizeType(str.size()));
+      return Key(strv.data(), SizeType(strv.size()));
     }
     
-    Writer& Key2(const std::basic_string<Ch>& str)
+    Writer& Key2(std::experimental::string_view strv)
     {
-      Key(str.data(), SizeType(str.size()));
+      Key(strv.data(), SizeType(strv.size()));
       return *this;
     }
-#endif
 	
     bool EndObject(SizeType memberCount = 0) {
         (void)memberCount;
