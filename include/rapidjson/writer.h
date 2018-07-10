@@ -37,6 +37,7 @@
 #endif
 
 #include <experimental/string_view>
+#include <string_view>
 
 #ifndef RAPIDJSON_HAS_STDSTRING
 #define RAPIDJSON_HAS_STDSTRING
@@ -218,6 +219,10 @@ public:
         return String(strv.data(), SizeType(strv.size()));
     }
 
+    bool String(std:::string_view strv) {
+        return String(strv.data(), SizeType(strv.size()));
+    }
+
     bool StartObject() {
         Prefix(kObjectType);
         new (level_stack_.template Push<Level>()) Level(false);
@@ -238,6 +243,17 @@ public:
       return *this;
     }
 	
+    bool Key(std::string_view strv)
+    {
+      return Key(strv.data(), SizeType(strv.size()));
+    }
+    
+    Writer& Key2(std::string_view strv)
+    {
+      Key(strv.data(), SizeType(strv.size()));
+      return *this;
+    }
+
     bool EndObject(SizeType memberCount = 0) {
         (void)memberCount;
         RAPIDJSON_ASSERT(level_stack_.GetSize() >= sizeof(Level)); // not inside an Object
