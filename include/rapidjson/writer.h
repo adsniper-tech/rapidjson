@@ -219,7 +219,7 @@ public:
         return String(strv.data(), SizeType(strv.size()));
     }
 
-    bool String(std:::string_view strv) {
+    bool String(std::string_view strv) {
         return String(strv.data(), SizeType(strv.size()));
     }
 
