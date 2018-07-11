@@ -36,7 +36,6 @@
 #include <arm_neon.h>
 #endif
 
-#include <experimental/string_view>
 #include <string_view>
 
 #ifndef RAPIDJSON_HAS_STDSTRING
@@ -215,10 +214,6 @@ public:
         return EndValue(WriteString(str, length));
     }
 
-    bool String(std::experimental::string_view strv) {
-        return String(strv.data(), SizeType(strv.size()));
-    }
-
     bool String(std::string_view strv) {
         return String(strv.data(), SizeType(strv.size()));
     }
@@ -232,17 +227,6 @@ public:
     bool Key(const Ch* str, SizeType length, bool copy = false) { return String(str, length, copy); }
     Writer& Key2(const Ch* str, SizeType length, bool copy = false) { String(str, length, copy); return *this; }
 
-    bool Key(std::experimental::string_view strv)
-    {
-      return Key(strv.data(), SizeType(strv.size()));
-    }
-    
-    Writer& Key2(std::experimental::string_view strv)
-    {
-      Key(strv.data(), SizeType(strv.size()));
-      return *this;
-    }
-	
     bool Key(std::string_view strv)
     {
       return Key(strv.data(), SizeType(strv.size()));
