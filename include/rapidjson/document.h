@@ -1154,6 +1154,9 @@ public:
     //! Get a value from an object associated with name (string object).
     GenericValue& operator[](const std::basic_string<Ch>& name) { return (*this)[GenericValue(StringRef(name))]; }
     const GenericValue& operator[](const std::basic_string<Ch>& name) const { return (*this)[GenericValue(StringRef(name))]; }
+
+    GenericValue& operator[](std::string_view name) { return (*this)[GenericValue(StringRef(name.data(), name.size()))]; }
+    const GenericValue& operator[](std::string_view name) const { return (*this)[GenericValue(StringRef(name.data(), name.size()))]; }
 #endif
 
     //! Const member iterator
@@ -1204,6 +1207,7 @@ public:
         \note Linear time complexity.
     */
     bool HasMember(const std::basic_string<Ch>& name) const { return FindMember(name) != MemberEnd(); }
+    bool HasMember(std::string_view name) const { return FindMember(name) != MemberEnd(); }
 #endif
 
     //! Check whether a member exists in the object with GenericValue name.
@@ -1272,6 +1276,9 @@ public:
     */
     MemberIterator FindMember(const std::basic_string<Ch>& name) { return FindMember(GenericValue(StringRef(name))); }
     ConstMemberIterator FindMember(const std::basic_string<Ch>& name) const { return FindMember(GenericValue(StringRef(name))); }
+
+    MemberIterator FindMember(std::string_view name) { return FindMember(GenericValue(StringRef(name.data(), name.size()))); }
+    ConstMemberIterator FindMember(std::string_view name) const { return FindMember(GenericValue(StringRef(name.data(), name.size()))); }
 #endif
 
     //! Add a member (name-value pair) to the object.

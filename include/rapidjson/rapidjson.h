@@ -147,6 +147,7 @@
 
 #if RAPIDJSON_HAS_STDSTRING
 #include <string>
+#include <string_view>
 #endif // RAPIDJSON_HAS_STDSTRING
 
 ///////////////////////////////////////////////////////////////////////////////
